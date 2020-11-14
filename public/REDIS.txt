@@ -1,0 +1,66 @@
+REDIS
+
+redis-cli - старт и вход в редис cli
+
+redis-server - если could not connect
+
+6379 - PORT
+
+там:
+quit - выход
+
+SET key value
+GET key
+EXISTS key
+FLUSHALL
+SET key value EX 5 - сохранение в секундах
+SET key value PX 5 - в миллисекундах
+GETSET key value - вернуть и сразу установить новое значение (заменить)
+APPEND key value - добавить значение
+KEYS * - вернуть все ключи что в памяти
+INCR key - инкремент
+DECR key - декримент
+
+Работа как с ассоциативным массивом:
+HSET person1 name "Vasya"
+HGET person1 name
+HGETALL person1
+HVALS
+HKEYS
+
+Работа с множеством (как простым не упорядоченным массивом) (куча)
+SADD names "Vasya"
+SMEMBERS names
+SCARD names - count()
+SUNION - обьединение
+SDIFF - разность (порядок множеств имеет значение)
+SINTER - пересечение
+SPOP - возвращает и удаляет случайный элемент
+
+Списки:
+LPUSH mylist "one" - добавляем в начало
+RPUSH mylist "two" - добавляем в конец
+LRANGE mylist 0 -1 - покажи с нулевого начиная до (-1) все
+LPOP mylist - взять слева и удалить
+RPOP mylist - взять справа и удалить
+LLEN - длинна списка
+
+Упорядоченное множество:
+ZADD
+ZRANGE
+
+Транзакции: (отложенное изполнение команд)
+MULTI - старт
+EXEC - выполнить
+DISCARD - отменить
+
+Подписки:
+SUBSCRIBE channel - Подписка
+PUBLISH channel "Hello" - публикация в канале
+
+
+https://redis.io/commands
+
+на php:
+$redis = new Redis();
+$redis->connect('127.0.0.1', 6379);
