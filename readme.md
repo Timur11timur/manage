@@ -2,4 +2,11 @@
 
 This is an open source forum
 
-TODO 
+## Instruction:
+
+* git clone https://github.com/Timur11timur/manage.git
+* cd manage
+* composer install
+* php artisan key:generate
+* cp .env.example .env
+* php artisan migrate
