@@ -10,3 +10,4 @@ This is an open source forum
 * php artisan key:generate
 * cp .env.example .env
 * php artisan migrate
+* php artisan db:seed
