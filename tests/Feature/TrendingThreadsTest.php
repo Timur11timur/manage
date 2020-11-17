@@ -3,7 +3,7 @@
 namespace Tests\Feature;
 
 use App\Thread;
-use App\Trending;
+use App\Libraries\Trending;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Redis;
 use Tests\TestCase;

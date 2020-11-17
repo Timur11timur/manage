@@ -6,7 +6,7 @@ use App\Channel;
 use App\Filters\ThreadFilters;
 use App\Rules\Recaptcha;
 use App\Thread;
-use App\Trending;
+use App\Libraries\Trending;
 
 /**
  * Class ThreadController

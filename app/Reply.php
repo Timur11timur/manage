@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Libraries\Reputation;
 use App\Traits\Favoritable;
 use App\Traits\RecordsActivity;
 use Carbon\Carbon;
@@ -24,7 +25,7 @@ class Reply extends Model
         static::created(function($reply) {
             $reply->thread->increment('replies_count');
 
-            $reply->owner->increment('reputation', 2);
+            Reputation::award( $reply->owner, Reputation::REPLY_POSTED);
         });
 
         static::deleted(function($reply) {
