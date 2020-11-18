@@ -48,7 +48,7 @@ Route::post('/threads/{channel}/{thread}/subscriptions', 'ThreadSubscriptionsCon
 Route::delete('/threads/{channel}/{thread}/subscriptions', 'ThreadSubscriptionsController@destroy')->middleware('auth');
 
 Route::post('/replies/{reply}/favorites', 'FavoriteController@store');
-Route::delete('/replies/{reply}/favorites', 'FavoriteController@destroy');
+Route::delete('/replies/{reply}/favorites', 'FavoriteController@destroy')->name('replies.unfavorite');
 
 Route::get('/profiles/{user}', 'ProfileController@show')->name('profile');
 Route::get('/profiles/{user}/notifications', 'UserNotificationsController@index');

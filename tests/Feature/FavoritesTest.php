@@ -39,7 +39,7 @@ class FavoritesTest extends TestCase
 
         $reply->favorite();
 
-        $this->delete('replies/' . $reply->id . '/favorites');
+        $this->delete(route('replies.unfavorite', $reply->id));
 
         $this->assertCount(0, $reply->favorites);
     }

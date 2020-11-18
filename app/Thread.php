@@ -32,12 +32,14 @@ class Thread extends Model
             $thread->replies->each(function ($reply) {
                 $reply->delete();
             });
+
+            Reputation::reduce($thread->creator, Reputation::THREAD_WAS_PUBLISHED);
         });
 
         static::created(function ($thread) {
             $thread->update(['slug' => $thread->title]);
 
-            Reputation::award( $thread->creator, Reputation::THREAD_WAS_PUBLISHED);
+            Reputation::award($thread->creator, Reputation::THREAD_WAS_PUBLISHED);
         });
     }
 
@@ -89,7 +91,7 @@ class Thread extends Model
         $this->subscriptions()->where(
             'user_id', $userId ?: auth()->user()->id
         )
-        ->delete();
+            ->delete();
     }
 
     public function subscriptions()
@@ -127,10 +129,10 @@ class Thread extends Model
 
     public function markBestReply($reply)
     {
-        $this->update(['best_reply_id'=> $reply->id]);
+        $this->update(['best_reply_id' => $reply->id]);
 
 
-       Reputation::award( $reply->owner, Reputation::BEST_REPLY_AWARDED);
+        Reputation::award($reply->owner, Reputation::BEST_REPLY_AWARDED);
     }
 
     public function toSearchableArray()
