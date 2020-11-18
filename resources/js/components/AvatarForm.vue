@@ -3,7 +3,10 @@
         <div class="d-flex align-items-center">
             <img :src="avatar" width="50" height="50" class="mr-2">
 
-            <h1 v-text="user.name" class="mb-0"></h1>
+            <h1 class="mb-0">
+                {{ user.name }}
+                <small v-text="reputation"></small>
+            </h1>
         </div>
 
         <form v-if="canUpdate" method="POST" enctype="multipart/form-data" class="mt-2">
@@ -29,6 +32,10 @@
         computed: {
             canUpdate() {
                 return this.authorize(user => user.id === this.user.id);
+            },
+
+            reputation() {
+                return this.user.reputation + 'XP';
             }
         },
 
