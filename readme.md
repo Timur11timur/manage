@@ -1,4 +1,4 @@
-#About project
+#About project [![Build Status](https://travis-ci.com/Timur11timur/manage.svg?branch=main)](https://travis-ci.com/Timur11timur/manage)
 
 This is an open source forum
 
