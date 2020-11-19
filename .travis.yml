@@ -12,9 +12,6 @@ script:
   - php artisan key:generate
   - vendor/bin/phpunit
 
-services:
-  - redis-server
-
 cache:
   directories:
     - vendor
