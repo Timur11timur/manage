@@ -16,6 +16,10 @@ Add necessary params to .env
 * php artisan migrate
 * php artisan db:seed
 
+- Visit: project/register and register an account.
+- Edit `config/manage.php`, adding the email address of the account you just created.
+- Visit: project/admin/channels and add at least one channel. 
+
 ##Contributing
 Thank you for considering contributing in the project!
 
