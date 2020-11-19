@@ -26,7 +26,9 @@ class LockThreadsTest extends TestCase
     /** @test */
     public function administrators_can_lock_threads()
     {
-        $this->signIn(factory(User::class)->states('administrator')->create());
+        $user = factory('App\User')->create();
+        config(['manage.administrators' => [ $user->email ]]);
+        $this->signIn($user);
 
         $thread = factory(Thread::class)->create(['user_id' => auth()->id()]);
 
@@ -38,7 +40,9 @@ class LockThreadsTest extends TestCase
     /** @test */
     public function administrators_can_unlock_threads()
     {
-        $this->signIn(factory(User::class)->states('administrator')->create());
+        $user = factory('App\User')->create();
+        config(['manage.administrators' => [ $user->email ]]);
+        $this->signIn($user);
 
         $thread = factory(Thread::class)->create(['user_id' => auth()->id(), 'locked' => true]);
 

@@ -7,4 +7,8 @@ return [
         'secret' => env('RECAPTCHA_SECRET'),
     ],
 
+    'administrators' => [
+        'johndoe@example.com'
+    ]
+
 ];

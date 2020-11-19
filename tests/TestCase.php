@@ -17,4 +17,15 @@ abstract class TestCase extends BaseTestCase
 
         return $this;
     }
+
+    protected function signInAdmin($admin = null)
+    {
+        $admin = $admin ?: create(User::class);
+
+        config(['manage.administrators' => [ $admin->email ]]);
+
+        $this->actingAs($admin);
+
+        return $this;
+    }
 }

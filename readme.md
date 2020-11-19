@@ -4,6 +4,8 @@ This is an open source forum
 
 ## Installation instructions:
 
+###Step 1.
+
 * git clone https://github.com/Timur11timur/manage.git
 * cd manage
 * composer install
@@ -15,6 +17,11 @@ Add necessary params to .env
 * php artisan key:generate
 * php artisan migrate
 * php artisan db:seed
+
+###Step 2.
+- Visit: `project/register` to register a new forum account.
+- Edit `config/manage.php`, add any email address that should be marked as an administrator.
+- Visit: `project/admin/channels` to seed your forum one or more channels.
 
 ##Contributing
 Thank you for considering contributing in the project!
