@@ -13,20 +13,25 @@ class SearchTest extends TestCase
     /** @test */
     public function a_user_can_search_threads()
     {
-        config(['scout.driver' => 'algolia']);
-        $search = 'foobar';
+        if (env('ALGOLIA_APP_ID') == "") {
+            $this->markTestSkipped('Test skipped, because there are no algolia data');
+        } else {
+            config(['scout.driver' => 'algolia']);
+            $search = 'foobar';
 
-        factory(Thread::class, 2)->create([]);
-        factory(Thread::class, 2)->create(['body' => "A thread with the {$search} term."]);
+            factory(Thread::class, 2)->create([]);
+            factory(Thread::class, 2)->create(['body' => "A thread with the {$search} term."]);
 
-        do {
-            sleep(0.25);
+            do {
+                sleep(0.25);
 
-            $results = $this->getJson("/threads/search?q={$search}")->json()['data'];
-        } while (empty($results));
+                $results = $this->getJson("/threads/search?q={$search}")->json()['data'];
+            } while (empty($results));
 
-        $this->assertCount(2, $results);
+            $this->assertCount(2, $results);
 
-        Thread::latest()->take(4)->unsearchable();
+            Thread::latest()->take(4)->unsearchable();
+        }
+
     }
 }
