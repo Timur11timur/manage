@@ -1,11 +1,10 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Admin;
 
 use App\Channel;
 use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Session;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
 
@@ -13,22 +12,12 @@ class ChannelAdministrationTest extends TestCase
 {
     use RefreshDatabase;
 
-    protected function setUp()
-    {
-        parent::setUp();
-
-        $this->withExceptionHandling();
-    }
-
     /** @test */
     public function an_administrator_can_access_the_channel_administration_section()
     {
-        $administrator = factory('App\User')->create();
-        config(['council.administrators' => [ $administrator->email ]]);
-        $this->signIn($administrator);
+        $this->signInAdmin();
 
-        $this->actingAs($administrator)
-            ->get('/admin/channels')
+        $this->get(route('admin.channels.index'))
             ->assertStatus(Response::HTTP_OK);
     }
 
@@ -73,15 +62,12 @@ class ChannelAdministrationTest extends TestCase
             ->assertSessionHasErrors('description');
     }
 
-    protected function createChannel($overrides = [])
+    private function createChannel($overrides = [])
     {
-        $administrator = factory('App\User')->create();
-        config(['council.administrators' => [ $administrator->email ]]);
-        $this->signIn($administrator);
+        $this->signInAdmin();
 
-        $channel = make(Channel::class, $overrides);
+        $channel = factory(Channel::class)->make($overrides);
 
-        return $this->post('/admin/channels', $channel->toArray());
+        return $this->post(route('admin.channels.store'), $channel->toArray());
     }
-
 }

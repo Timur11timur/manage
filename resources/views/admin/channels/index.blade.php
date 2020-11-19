@@ -1,4 +1,4 @@
-@extends('admin.layout.app')
+@extends('admin.layouts.app')
 
 @section('administration-content')
 
@@ -16,10 +16,10 @@
         <tbody>
         @forelse($channels as $channel)
             <tr>
-                <td>{{$channel->name}}</td>
-                <td>{{$channel->slug}}</td>
-                <td>{{$channel->description}}</td>
-                <td>{{ count($channel->threads()) }}</td>
+                <td>{{ $channel->name }}</td>
+                <td>{{ $channel->slug }}</td>
+                <td>{{ $channel->description }}</td>
+                <td>{{ $channel->threads->count() }}</td>
             </tr>
         @empty
             <tr>

@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\admin;
+namespace Tests\Feature\Admin;
 
 use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -11,22 +11,12 @@ class AdministratorTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function setUp()
-    {
-        parent::setUp();
-
-        $this->withExceptionHandling();
-    }
-
     /** @test */
     public function an_administrator_can_access_the_administration_section()
     {
-        $administrator = factory('App\User')->create();
-        config(['council.administrators' => [ $administrator->email ]]);
-        $this->signIn($administrator);
+        $this->signInAdmin();
 
-        $this->actingAs($administrator)
-            ->get('/admin')
+        $this->get(route('admin.dashboard.index'))
             ->assertStatus(Response::HTTP_OK);
     }
 
@@ -36,7 +26,7 @@ class AdministratorTest extends TestCase
         $regularUser = factory(User::class)->create();
 
         $this->actingAs($regularUser)
-            ->get('/admin')
+            ->get(route('admin.dashboard.index'))
             ->assertStatus(Response::HTTP_FORBIDDEN);
     }
 }
