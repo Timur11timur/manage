@@ -14,7 +14,7 @@ class SearchTest extends TestCase
     public function a_user_can_search_threads()
     {
         if (env('ALGOLIA_APP_ID') == "") {
-            $this->markTestSkipped('Test skipped, because there are no algolia data');
+            $this->markTestSkipped('Test skipped, because Algolia is not configured');
         } else {
             config(['scout.driver' => 'algolia']);
             $search = 'foobar';

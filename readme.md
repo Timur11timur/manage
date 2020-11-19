@@ -17,6 +17,7 @@ Add necessary params to .env
 * php artisan key:generate
 * php artisan migrate
 * php artisan db:seed
+* npm run dev
 
 ###Step 2.
 - Visit: `project/register` to register a new forum account.

@@ -79,9 +79,13 @@ class CreateThreadsTest extends TestCase
     /** @test */
     public function a_thread_requires_recaptcha_verification()
     {
-        unset(app()[Recaptcha::class]);
-        $this->publishThread(['g-recaptcha-response' => 'test'])
-            ->assertSessionHasErrors('g-recaptcha-response');
+        if (Recaptcha::isInTestMode()) {
+            $this->markTestSkipped("Recaptcha is in test mode.");
+        } else {
+            unset(app()[Recaptcha::class]);
+            $this->publishThread(['g-recaptcha-response' => 'test'])
+                ->assertSessionHasErrors('g-recaptcha-response');
+        }
     }
 
     /** @test */
