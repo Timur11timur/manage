@@ -22,7 +22,8 @@
                     <button class="btn btn-link btn-sm" @click="editing = false" type="button">Cancel</button>
                 </form>
             </div>
-            <div v-else v-html="body">
+            <div ref="body" v-else>
+                <highlight :content="body"></highlight>
             </div>
         </div>
 
@@ -38,12 +39,13 @@
 
 <script>
     import Favorite from './Favorite.vue';
+    import Highlight from "./Highlight.vue";
     import moment from 'moment';
 
     export default {
         props: ['reply'],
 
-        components: { Favorite },
+        components: { Favorite, Highlight },
 
         data() {
             return {
@@ -57,12 +59,20 @@
         computed: {
             ago() {
                 return moment(this.reply.created_at).fromNow() + '...';
+            },
+
+            bestReplyClasses() {
+                let classes = [this.isBest ? "text-green" : "text-grey-light"];
+                if (!this.authorize("owns", this.reply.thread)) {
+                    classes.push("cursor-auto");
+                }
+                return classes;
             }
         },
 
         created() {
             window.events.$on('best-reply-selected', id => {
-                this.isBest = (id === this.id)
+                this.isBest = (id === this.id);
             });
         },
 
@@ -79,6 +89,11 @@
                 });
             },
 
+            cancel() {
+                this.editing = false;
+                this.body = this.reply.body;
+            },
+
             destroy() {
                 axios.delete('/replies/' + this.id);
 
@@ -86,6 +101,10 @@
             },
 
             markBestReply() {
+                if (!this.authorize("owns", this.reply.thread)) {
+                    return;
+                }
+
                 axios.post('/replies/' + this.id + '/best');
 
                 window.events.$emit('best-reply-selected', this.id);

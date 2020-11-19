@@ -2,7 +2,7 @@
     <div class="mt-2">
         <div v-if="signedIn">
             <div class="form-group">
-                <wysiwyg name="body" v-model="body" placeholder="Have something to say?" :shouldClear="completed"></wysiwyg>
+                <wysiwyg name="body" v-model="body" placeholder="Have something to say?"></wysiwyg>
             </div>
 
             <button type="submit"
@@ -14,6 +14,12 @@
     </div>
 </template>
 
+<style scoped>
+    .new-reply {
+        background-color: #fff;
+    }
+</style>
+
 <script>
     import 'jquery.caret';
     import 'at.js';
@@ -21,8 +27,13 @@
     export default {
         data() {
             return {
-                body: '',
-                completed: false
+                body: ''
+            }
+        },
+
+        computed: {
+            confirmed() {
+                return window.App.user.confirmed;
             }
         },
 
@@ -48,7 +59,6 @@
                     })
                     .then(({data}) => {
                         this.body = '';
-                        this.completed = true;
 
                         flash('Your reply has been posted.');
 

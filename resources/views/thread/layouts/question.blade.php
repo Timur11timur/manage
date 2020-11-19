@@ -44,7 +44,9 @@
         </span>
     </div>
 
-    <div class="card-body" v-html="body"></div>
+    <div ref="question" class="card-body">
+        <highlight :content="body"></highlight>
+    </div>
 
     <div class="card-footer py-1" v-if="authorize('owns', thread)">
         <button class="btn border btn-default btn-sm" @click="editing = true">Edit</button>
