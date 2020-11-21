@@ -4,13 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Channel;
 use App\Filters\ThreadFilters;
+use App\Libraries\Trending;
 use App\Rules\Recaptcha;
 use App\Thread;
-use App\Libraries\Trending;
 
 /**
- * Class ThreadController
- * @package App\Http\Controllers
+ * Class ThreadController.
  */
 class ThreadController extends Controller
 {
@@ -156,6 +155,7 @@ class ThreadController extends Controller
         }
 
         $threads = $threads->paginate(10);
+
         return $threads;
     }
 }

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Reply;
-use Illuminate\Http\Request;
 
 class FavoriteController extends Controller
 {

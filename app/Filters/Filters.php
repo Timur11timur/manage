@@ -20,7 +20,7 @@ abstract class Filters
         $this->builder = $builder;
 
         foreach ($this->getFilters() as $filter => $value) {
-            if(method_exists($this, $filter)) {
+            if (method_exists($this, $filter)) {
                 $this->$filter($value);
             }
         }

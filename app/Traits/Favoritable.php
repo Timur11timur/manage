@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Traits;
-
 
 use App\Favorite;
 use App\Libraries\Reputation;
@@ -25,10 +23,11 @@ trait Favoritable
     {
         $attributes = ['user_id' => auth()->id()];
 
-        if (!$this->favorites()->where($attributes)->exists())
+        if (! $this->favorites()->where($attributes)->exists()) {
             Reputation::award(auth()->user(), Reputation::REPLY_FAVORITED);
+        }
 
-            return $this->favorites()->create($attributes);
+        return $this->favorites()->create($attributes);
     }
 
     public function unfavorite()
@@ -44,7 +43,7 @@ trait Favoritable
 
     public function isFavorited()
     {
-        return !!$this->favorites->where('user_id', auth()->id())->count();
+        return (bool) $this->favorites->where('user_id', auth()->id())->count();
     }
 
     public function getIsFavoritedAttribute()
