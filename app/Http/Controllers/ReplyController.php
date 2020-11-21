@@ -8,8 +8,7 @@ use App\Thread;
 use http\Env\Response;
 
 /**
- * Class ReplyController
- * @package App\Http\Controllers
+ * Class ReplyController.
  */
 class ReplyController extends Controller
 {
@@ -34,7 +33,7 @@ class ReplyController extends Controller
      */
     public function store($channel, Thread $thread, CreatePostRequest $form)
     {
-        if($thread->locked) {
+        if ($thread->locked) {
             return response('Thread is locked', 422);
         }
 
@@ -60,7 +59,6 @@ class ReplyController extends Controller
         ]);
 
         $reply->update(['body' => request('body')]);
-
     }
 
     /**
@@ -74,7 +72,7 @@ class ReplyController extends Controller
 
         $reply->delete();
 
-        if(request()->expectsJson()) {
+        if (request()->expectsJson()) {
             return response(['status' => 'Reply deleted']);
         }
 

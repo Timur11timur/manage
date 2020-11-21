@@ -4,11 +4,11 @@
 
 use App\Channel;
 use App\Reply;
-use App\User;
 use App\Thread;
+use App\User;
 use Faker\Generator as Faker;
-use Illuminate\Support\Str;
 use Illuminate\Notifications\DatabaseNotification;
+use Illuminate\Support\Str;
 
 $factory->define(User::class, function (Faker $faker) {
     return [
@@ -28,7 +28,6 @@ $factory->state(User::class, 'uncomfirmed', function () {
     ];
 });
 
-
 $factory->state(User::class, 'administrator', function () {
     return [
         'isAdmin' => true
@@ -37,6 +36,7 @@ $factory->state(User::class, 'administrator', function () {
 
 $factory->define(Thread::class, function (Faker $faker) {
     $title = $faker->sentence;
+
     return [
         'user_id' => function () {
             return factory(User::class)->create()->id;
@@ -54,6 +54,7 @@ $factory->define(Thread::class, function (Faker $faker) {
 
 $factory->define(Channel::class, function (Faker $faker) {
     $name = $faker->word;
+
     return [
         'name' => $name,
         'slug' => $name,

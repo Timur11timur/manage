@@ -8,7 +8,9 @@ trait RecordsActivity
 {
     protected static function bootRecordsActivity()
     {
-        if (auth()->guest()) return;
+        if (auth()->guest()) {
+            return;
+        }
 
         foreach (static::getActivitiesToRecord() as $event) {
             static::$event(function ($model) use ($event) {
@@ -33,7 +35,6 @@ trait RecordsActivity
             'type' => $this->getActivityType($event),
         ]);
 
-
 //        Activity::create([
 //            'user_id' => auth()->user()->id,
 //            'type' => $this->getActivityType($event),
@@ -49,6 +50,6 @@ trait RecordsActivity
 
     protected function getActivityType($event): string
     {
-        return $event . '_' . strtolower((new \ReflectionClass($this))->getShortName());
+        return $event.'_'.strtolower((new \ReflectionClass($this))->getShortName());
     }
 }

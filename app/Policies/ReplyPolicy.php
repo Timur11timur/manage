@@ -22,7 +22,7 @@ class ReplyPolicy
         if (is_null($lastReply)) {
             $result = true;
         } else {
-            $result = !$lastReply->wasJustPublished();
+            $result = ! $lastReply->wasJustPublished();
         }
 
         return $result;
