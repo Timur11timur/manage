@@ -16,7 +16,7 @@
             <div v-if="editing">
                 <form @submit="update">
                     <div class="form-group">
-                        <wysiwyg v-model="form.body"></wysiwyg>
+                        <wysiwyg v-model="body"></wysiwyg>
                     </div>
                     <button class="btn btn-primary btn-sm">Update</button>
                     <button class="btn btn-link btn-sm" @click="editing = false" type="button">Cancel</button>
@@ -32,83 +32,85 @@
                 <button class="btn btn-warning btn-sm mr-2" @click="editing = true">Edit</button>
                 <button class="btn btn-danger btn-sm" @click="destroy">Delete</button>
             </div>
-            <button class="btn btn-default border btn-sm ml-auto" @click="markBestReply" v-if="authorize('owns', reply.thread)">Best Reply?</button>
+            <button class="btn btn-default border btn-sm ml-auto" @click="markBestReply"
+                    v-if="authorize('owns', reply.thread)">Best Reply?
+            </button>
         </div>
     </div>
 </template>
 
 <script>
-    import Favorite from './Favorite.vue';
-    import Highlight from "./Highlight.vue";
-    import moment from 'moment';
+import Favorite from './Favorite.vue';
+import Highlight from './Highlight.vue';
+import moment from 'moment';
 
-    export default {
-        props: ['reply'],
+export default {
+    props: ['reply'],
 
-        components: { Favorite, Highlight },
+    components: {Favorite, Highlight},
 
-        data() {
-            return {
-                editing: false,
-                id: this.reply.id,
-                body: this.reply.body,
-                isBest: this.reply.isBest,
-            };
+    data() {
+        return {
+            editing: false,
+            id: this.reply.id,
+            body: this.reply.body,
+            isBest: this.reply.isBest,
+        };
+    },
+
+    computed: {
+        ago() {
+            return moment(this.reply.created_at).fromNow() + '...';
         },
 
-        computed: {
-            ago() {
-                return moment(this.reply.created_at).fromNow() + '...';
-            },
-
-            bestReplyClasses() {
-                let classes = [this.isBest ? "text-green" : "text-grey-light"];
-                if (!this.authorize("owns", this.reply.thread)) {
-                    classes.push("cursor-auto");
-                }
-                return classes;
+        bestReplyClasses() {
+            let classes = [this.isBest ? "text-green" : "text-grey-light"];
+            if (!this.authorize("owns", this.reply.thread)) {
+                classes.push("cursor-auto");
             }
-        },
+            return classes;
+        }
+    },
 
-        created() {
-            window.events.$on('best-reply-selected', id => {
-                this.isBest = (id === this.id);
+    created() {
+        window.events.$on('best-reply-selected', id => {
+            this.isBest = (id === this.id);
+        });
+    },
+
+    methods: {
+        update() {
+            axios.patch('/replies/' + this.id, {
+                body: this.body
+            }).catch(error => {
+                flash(error.response.data, 'danger');
+            }).then(({data}) => {
+                this.editing = false;
+
+                flash('Updated!');
             });
         },
 
-        methods: {
-            update() {
-                axios.patch('/replies/' + this.id, {
-                    body: this.body
-                }).catch(error => {
-                    flash(error.response.data, 'danger');
-                }).then(({data}) => {
-                    this.editing = false;
+        cancel() {
+            this.editing = false;
+            this.body = this.reply.body;
+        },
 
-                    flash('Updated!');
-                });
-            },
+        destroy() {
+            axios.delete('/replies/' + this.id);
 
-            cancel() {
-                this.editing = false;
-                this.body = this.reply.body;
-            },
+            this.$emit('deleted', this.id);
+        },
 
-            destroy() {
-                axios.delete('/replies/' + this.id);
-
-                this.$emit('deleted', this.id);
-            },
-
-            markBestReply() {
-                if (!this.authorize("owns", this.reply.thread)) {
-                    return;
-                }
-
-                axios.post('/replies/' + this.id + '/best');
-
-                window.events.$emit('best-reply-selected', this.id);
+        markBestReply() {
+            if (!this.authorize("owns", this.reply.thread)) {
+                return;
             }
+
+            axios.post('/replies/' + this.id + '/best');
+
+            window.events.$emit('best-reply-selected', this.id);
         }
     }
+}
 </script>

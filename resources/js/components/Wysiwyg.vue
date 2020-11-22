@@ -12,8 +12,30 @@
     </div>
 </template>
 
-<style lang="scss">
-    @import '~trix/dist/trix.css';
+<style>
+    trix-editor {
+        border-color: #dae1e7;
+        border-radius: 0;
+        padding: 10px;
+    }
+
+    trix-editor pre {
+        border: 1px solid grey;
+        border-radius: 2px;
+        background-color: #eeeeee;
+        padding: 5px;
+    }
+
+    trix-toolbar .trix-button-group {
+        border-color: #dae1e7;
+        margin-bottom: 0;
+        border-bottom: none;
+        border-radius: 0;
+    }
+
+    trix-toolbar .trix-button {
+        border-bottom: none;
+    }
 </style>
 
 <script>
