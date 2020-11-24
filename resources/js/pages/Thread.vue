@@ -26,7 +26,7 @@ export default {
 
     methods: {
         toggleLock() {
-            let uri = '/locked-threads/${this.thread.slug}';
+            let uri = '/locked-threads/' + this.thread.slug;
 
             axios[this.locked ? 'delete' : 'post'](uri);
 
@@ -34,7 +34,7 @@ export default {
         },
 
         togglePin() {
-            let uri = '/pinned-threads/${this.thread.slug}';
+            let uri = '/pinned-threads/' + this.thread.slug;
 
             axios[this.locked ? 'delete' : 'post'](uri);
 
@@ -44,7 +44,7 @@ export default {
         update() {
             let uri = '/threads/' + this.thread.channel.slug + '/' + this.thread.slug;
 
-            axios.patch(uri, this.form).then(() => {
+            axios.patch(uri, this.form).then( () => {
                 this.editing = false;
                 this.title = this.form.title;
                 this.body = this.form.body;

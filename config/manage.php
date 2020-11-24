@@ -9,6 +9,9 @@ return [
 
     'administrators' => [
         'johndoe@example.com'
-    ]
+    ],
 
+    'pagination' => [
+        'perPage' => 10
+    ]
 ];

@@ -26,10 +26,9 @@ class ThreadController extends Controller
      *
      * @param Channel $channel
      * @param ThreadFilters $filters
-     * @param Trending $trending
      * @return \Illuminate\Http\Response
      */
-    public function index(Channel $channel, ThreadFilters $filters, Trending $trending)
+    public function index(Channel $channel, ThreadFilters $filters)
     {
         $threads = $this->getThreads($channel, $filters);
 
@@ -39,7 +38,7 @@ class ThreadController extends Controller
 
         return view('thread.index', [
             'threads' => $threads,
-            'trendings' => $trending->get()
+            'channel' => $channel
         ]);
     }
 
@@ -50,7 +49,9 @@ class ThreadController extends Controller
      */
     public function create()
     {
-        return view('thread.create');
+        return view('thread.create', [
+            'channels' => Channel::all()
+        ]);
     }
 
     /**
@@ -79,7 +80,8 @@ class ThreadController extends Controller
             return response($thread, 201);
         }
 
-        return redirect($thread->path())->with('flash', 'Your thread has been published!');
+        return redirect($thread->path())
+            ->with('flash', 'Your thread has been published!');
     }
 
     /**
@@ -148,16 +150,12 @@ class ThreadController extends Controller
      */
     public function getThreads(Channel $channel, ThreadFilters $filters)
     {
-        $threads = Thread::orderBy('pinned', 'DESC')
-            ->latest()
-            ->filter($filters);
+        $threads = Thread::latest('pinned')->latest()->with('channel')->filter($filters);
 
         if ($channel->exists) {
             $threads->where('channel_id', $channel->id);
         }
 
-        $threads = $threads->paginate(10);
-
-        return $threads;
+        return $threads->paginate(config('manage.pagination.perPage'));;
     }
 }

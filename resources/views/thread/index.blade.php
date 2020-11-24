@@ -26,7 +26,7 @@
                     </div>
                 </div>
 
-                @if(count($trendings))
+                @if($trendings ?? false)
                     <div class="card">
                         <div class="card-header d-flex justify-content-between align-items-center">
                             Trending threads

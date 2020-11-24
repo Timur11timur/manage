@@ -1,26 +1,28 @@
 <template>
-    <button :class="classes" @click="subscribe">Subscribe</button>
+    <button class="btn border" :class="isActive ? 'btn-primary': 'btn-default'" @click.prevent="subscribe" v-text="isActive ? 'Subscribed' : 'Subscribe'"></button>
 </template>
 
 <script>
     export default {
         props: ['active'],
 
-        computed: {
-            classes() {
-                return ['btn', this.active ? 'btn-primary' : 'btn-default border'];
-            }
+        data() {
+            return {
+                isActive: this.active
+            };
         },
 
         methods: {
             subscribe() {
-                let requestType = this.active ? 'delete' : 'post';
+                axios[this.isActive ? "delete" : "post"](
+                    location.pathname + "/subscriptions"
+                );
 
-                axios[requestType](location.pathname + '/subscriptions');
+                this.isActive = !this.isActive;
 
-                this.active = !this.active;
-
-                flash('Subscribed');
+                if (this.isActive) {
+                    flash("Okay, we'll notify you when this thread is updated!");
+                }
             }
         }
     }
