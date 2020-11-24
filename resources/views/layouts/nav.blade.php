@@ -48,6 +48,8 @@
                         @endforeach
                     </div>
                 </li>
+
+                <channel-dropdown :channels="{{ $channels }}"></channel-dropdown>
             </ul>
 
             <!-- Right Side Of Navbar -->
