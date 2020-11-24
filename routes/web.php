@@ -36,6 +36,9 @@ Route::get('/threads/{channel}', 'ThreadController@index');
 Route::post('/locked-threads/{thread}', 'LockThreadController@store')->name('locked-threads.store')->middleware('admin');
 Route::delete('/locked-threads/{thread}', 'LockThreadController@destroy')->name('locked-threads.destroy')->middleware('admin');
 
+Route::post('pinned-threads/{thread}', 'PinnedThreadsController@store')->name('pinned-threads.store')->middleware('admin');
+Route::delete('pinned-threads/{thread}', 'PinnedThreadsController@destroy')->name('pinned-threads.destroy')->middleware('admin');
+
 Route::get('/threads/{channel}/{thread}/replies', 'ReplyController@index');
 Route::post('/threads/{channel}/{thread}/replies', 'ReplyController@store');
 Route::patch('/replies/{reply}', 'ReplyController@update');
@@ -57,6 +60,7 @@ Route::get('/register/confirm', 'Auth\RegisterConformationController@index')->na
 
 Route::get('api/users', 'Api\UserController@index');
 Route::post('api/users/{user_id}/avatar', 'Api\UserAvatarController@store')->middleware('auth')->name('avatar');
+Route::get('api/channels', 'Api\ChannelsController@index');
 
 Route::group([
     'prefix' => 'admin',
