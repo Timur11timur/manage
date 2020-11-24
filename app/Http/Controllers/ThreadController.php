@@ -156,6 +156,6 @@ class ThreadController extends Controller
             $threads->where('channel_id', $channel->id);
         }
 
-        return $threads->paginate(config('manage.pagination.perPage'));;
+        return $threads->paginate(config('manage.pagination.perPage'));
     }
 }
