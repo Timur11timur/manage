@@ -8,7 +8,7 @@ class Channel extends Model
 {
     protected $guarded = [];
 
-    protected $casts =[
+    protected $casts = [
         'archived' => 'boolean'
     ];
 

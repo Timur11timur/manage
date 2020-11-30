@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Channel;
 use App\Http\Controllers\Controller;
-use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 class ChannelsController extends Controller
 {
