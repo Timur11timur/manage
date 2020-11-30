@@ -2,7 +2,7 @@
 /public/hot
 /public/storage
 /storage/*.key
-/storage/purify
+/storage/purify/*
 /vendor
 /.env
 /.idea
