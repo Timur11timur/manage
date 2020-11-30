@@ -32,4 +32,13 @@ class ChannelTest extends TestCase
 
         $this->assertTrue($channel->fresh()->archived);
     }
+
+    /** @test */
+    public function archived_channel_are_excluded_by_default()
+    {
+        factory(Channel::class)->create();
+        factory(Channel::class)->create(['archived' => true]);
+
+        $this->assertEquals(1, Channel::count());
+    }
 }
