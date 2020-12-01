@@ -8,7 +8,7 @@ use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 
-class ChannelsController extends Controller
+class AdminChannelsController extends Controller
 {
     public function index()
     {

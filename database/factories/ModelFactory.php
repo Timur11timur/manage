@@ -57,7 +57,7 @@ $factory->define(Channel::class, function (Faker $faker) {
 
     return [
         'name' => $name,
-        'slug' => $name,
+        'slug' => Str::slug($name),
         'description' => $faker->sentence,
         'archived' => false
     ];

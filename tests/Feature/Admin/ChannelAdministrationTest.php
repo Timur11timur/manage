@@ -51,13 +51,16 @@ class ChannelAdministrationTest extends TestCase
     /** @test */
     public function an_administrator_can_edit_an_existing_channel()
     {
+        $this->withoutExceptionHandling();
+
         $this->signInAdmin();
 
         $channel = create('App\Channel');
 
         $updated_data = [
             'name' => 'altered',
-            'description' => 'altered channel description'
+            'description' => 'altered channel description',
+            'archived' => false,
         ];
 
         $this->patch(
