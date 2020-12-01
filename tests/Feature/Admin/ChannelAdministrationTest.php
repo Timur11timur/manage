@@ -3,6 +3,7 @@
 namespace Tests\Feature\Admin;
 
 use App\Channel;
+use App\Thread;
 use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Symfony\Component\HttpFoundation\Response;
@@ -80,7 +81,6 @@ class ChannelAdministrationTest extends TestCase
 
         $channel = create('App\Channel');
 
-
         $this->assertFalse($channel->fresh()->archived);
 
         $updated_data = [
@@ -95,6 +95,22 @@ class ChannelAdministrationTest extends TestCase
         );
 
         $this->assertTrue($channel->fresh()->archived);
+    }
+
+    /** @test */
+    public function archived_channels_should_not_influence_existing_thread()
+    {
+        $channel = create('App\Channel');
+
+        $thread = factory(Thread::class)->create(['channel_id' => $channel->id]);
+
+        $path = $thread->path();
+
+        $channel->update([
+            'archived' => true
+        ]);
+
+        $this->assertEquals($path, $thread->fresh()->path());
     }
 
     /** @test */

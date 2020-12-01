@@ -14,7 +14,7 @@ class AdminChannelsController extends Controller
     {
         $channels = Channel::withoutGlobalScopes()
             ->orderBy('name', 'asc')
-            ->with('threads')
+            ->withCount('threads')
             ->get();
 
         return view('admin.channels.index')->with('channels', $channels);
