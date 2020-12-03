@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Traits\HasReputation;
 use Carbon\Carbon;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -9,7 +10,7 @@ use Illuminate\Support\Facades\Cache;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    use Notifiable, HasReputation;
 
     public function getRouteKeyName()
     {

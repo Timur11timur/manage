@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Channel;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
 
@@ -33,5 +34,9 @@ class AppServiceProvider extends ServiceProvider
         });
 
         Validator::extend('spamfree', 'App\Rules\SpamFree@passes');
+
+//        \DB::listen(function ($e) {
+//            Log::info($e->sql);
+//        });
     }
 }

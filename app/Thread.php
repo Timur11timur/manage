@@ -135,6 +135,19 @@ class Thread extends Model
         Reputation::award($reply->owner, Reputation::BEST_REPLY_AWARDED);
     }
 
+    public function unsetBestReply()
+    {
+        if ($this->hasBestReply()) {
+            //$this->bestReply->owner->loseReputation('best_reply_awarded');
+            $this->update(['best_reply_id' => null]);
+        }
+    }
+
+    public function hasBestReply()
+    {
+        return ! is_null($this->best_reply_id);
+    }
+
     public function toSearchableArray()
     {
         return $this->toArray() + ['path' => $this->path()];

@@ -65,19 +65,22 @@ class PinThreadsTest extends TestCase
     {
         $this->signInAdmin();
 
-        $threads = factory(Thread::class,3)->create();
-        $ids = $threads->pluck('id');
+        $threads1 = factory(Thread::class)->create();
+        $threads2 = factory(Thread::class)->create();
+        $threads3 = factory(Thread::class)->create();
 
         $response_data = $this->getJson(route('threads'))->decodeResponseJson()['data'];
-        $this->assertEquals($ids[0], $response_data[0]['id']);
-        $this->assertEquals($ids[1], $response_data[1]['id']);
-        $this->assertEquals($ids[2], $response_data[2]['id']);
+        $this->assertEquals($threads1->id, $response_data[0]['id']);
+        $this->assertEquals($threads2->id, $response_data[1]['id']);
+        $this->assertEquals($threads3->id, $response_data[2]['id']);
 
-        $this->post(route('pinned-threads.store', $pinned = $threads->last()));
+        $this->post(route('pinned-threads.store', $threads3->fresh()->slug));
+
+        $this->assertTrue($threads3->fresh()->pinned);
 
         $response_data = $this->getJson(route('threads'))->decodeResponseJson()['data'];
-        $this->assertEquals($pinned->id, $response_data[0]['id']);
-        $this->assertEquals($ids[0], $response_data[1]['id']);
-        $this->assertEquals($ids[1], $response_data[2]['id']);
+        $this->assertEquals($threads3->id, $response_data[0]['id']);
+        $this->assertEquals($threads1->id, $response_data[1]['id']);
+        $this->assertEquals($threads2->id, $response_data[2]['id']);
     }
 }

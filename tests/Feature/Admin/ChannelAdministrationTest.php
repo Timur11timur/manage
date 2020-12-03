@@ -18,8 +18,9 @@ class ChannelAdministrationTest extends TestCase
     {
         $this->signInAdmin();
 
-        $this->get(route('admin.channels.index'))
-            ->assertStatus(Response::HTTP_OK);
+        $response = $this->get(route('admin.channels.index'));
+
+        $response->assertStatus(Response::HTTP_OK);
     }
 
     /** @test */
