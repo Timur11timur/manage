@@ -1,15 +1,17 @@
 <template>
-    <li class="dropdown nav-item" :class="{open: toggle}">
+    <li class="dropdown nav-item" :class="{show: toggle}">
         <a href="#"
            class="dropdown-toggle nav-link"
+           id="dropdownChannelLink"
            aria-haspopup="true"
            aria-expanded="false"
            @click.prevent="toggle = !toggle"
+           data-toggle="dropdown"
         >
             Channels <span class="caret"></span>
         </a>
 
-        <div class="dropdown-menu channel-dropdown">
+        <div class="dropdown-menu channel-dropdown" aria-labelledby="dropdownChannelLink">
             <div class="input-wrapper">
                 <input type="text"
                        class="form-control"
